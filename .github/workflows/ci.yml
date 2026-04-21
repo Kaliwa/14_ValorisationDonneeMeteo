@@ -156,11 +156,20 @@ jobs:
           version: v0.70.0
           cache: true
 
-      - name: Run Trivy filesystem scan
+      - name: Show Trivy results in logs
         run: |
           trivy fs . \
+            --scanners vuln \
             --severity HIGH,CRITICAL \
             --exit-code 1 \
+            --format table
+
+      - name: Export Trivy SARIF report
+        if: always()
+        run: |
+          trivy fs . \
+            --scanners vuln \
+            --severity HIGH,CRITICAL \
             --format sarif \
             --output trivy-results.sarif
 
