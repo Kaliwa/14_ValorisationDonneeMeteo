@@ -35,4 +35,6 @@ def test_metrics_endpoint_exposes_prometheus_text_payload():
     assert "meteo_stations_total" in body
     assert "meteo_hourly_measurements_total" in body
     assert "meteo_daily_measurements_total" in body
-    assert 'meteo_http_requests_total{method="GET",path="metrics/",status="200"}' in body
+    assert (
+        'meteo_http_requests_total{method="GET",path="metrics/",status="200"}' in body
+    )
