@@ -19,7 +19,14 @@ def test_metrics_endpoint_exposes_prometheus_text_payload():
     QuotidienneFactory(station=station)
 
     client = APIClient()
-    response = client.get(reverse("metrics"))
+    metrics_url = reverse("metrics")
+
+    # The metrics endpoint records requests after the response is built,
+    # so the first scrape won't contain its own counter line yet.
+    first_response = client.get(metrics_url)
+    assert first_response.status_code == 200
+
+    response = client.get(metrics_url)
 
     assert response.status_code == 200
     assert response["Content-Type"].startswith("text/plain")
