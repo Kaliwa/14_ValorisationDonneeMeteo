@@ -1,0 +1,93 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/kaliwa/14_ValorisationDonneeMeteo/security/trivy.openvex.json",
+  "author": "Kaliwa",
+  "timestamp": "2026-04-21T00:00:00Z",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2026-28292"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/simple-git@3.31.1"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "impact_statement": "simple-git is pulled through Nuxt devtools and is not shipped in the frontend production image.",
+      "action_statement": "Keep the dependency under review and update the lockfile when upstream tooling publishes a fixed version."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-28291"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/simple-git@3.31.1"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "impact_statement": "simple-git is only used by development tooling and is absent from the production runtime image.",
+      "action_statement": "Update the transitive dependency once Nuxt devtools exposes a patched chain."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-39363"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/vite@7.3.1"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "impact_statement": "This Vite issue targets the development server. The deployed frontend image runs the built Nuxt server output, not the Vite dev server.",
+      "action_statement": "Update Vite and regenerate the lockfile when the consuming packages allow the fixed version."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-39364"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/vite@7.3.1"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "impact_statement": "The vulnerable Vite dev-server path is not exposed by the production deployment produced by this repository.",
+      "action_statement": "Track upstream updates and refresh the dependency tree."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-27606"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/rollup@4.57.1"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "impact_statement": "Rollup is used during asset bundling and is not present in the shipped runtime image.",
+      "action_statement": "Upgrade Rollup through the Nuxt/Vite toolchain when a compatible fixed version is available."
+    },
+    {
+      "vulnerability": {
+        "name": "GHSA-5c6j-r48x-rmvq"
+      },
+      "products": [
+        {
+          "@id": "pkg:npm/serialize-javascript@6.0.2"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "impact_statement": "serialize-javascript is only involved in the build toolchain and is not loaded by the production containers.",
+      "action_statement": "Consume the upstream fixed version when the transitive dependency chain is updated."
+    }
+  ]
+}
