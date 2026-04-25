@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm
+FROM dhi.io/python:3.12-dev AS build
 
 WORKDIR /app
 
@@ -11,12 +11,14 @@ COPY --from=ghcr.io/astral-sh/uv:0.10.0 /uv /uvx /bin/
 COPY . .
 RUN uv sync --locked
 
+FROM dhi.io/python:3.12
 
+WORKDIR /app
 
-COPY entrypoint.sh /entrypoint.sh
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-RUN chmod +x /entrypoint.sh
+COPY --from=build /app /app
 
-ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 8000
-CMD ["uv", "run", "gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["/app/.venv/bin/python", "container_entrypoint.py"]
